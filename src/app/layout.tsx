@@ -1,29 +1,23 @@
 import './globals.css';
-import { Inter as FontSans } from 'next/font/google';
+import { Ubuntu_Mono } from 'next/font/google';
 import { ThemeProvider } from '@/components/theme-provider';
 
-import { cn } from '@/lib/utils';
+const ubuntuMono = Ubuntu_Mono({
+	weight: '400',
+	subsets: ['latin'],
+	variable: '--font-mono',
+});
 
 export type RootLayoutProps = {
 	children: React.ReactNode;
 };
-
-export const fontSans = FontSans({
-	subsets: ['latin'],
-	variable: '--font-sans',
-});
 
 export default function RootLayout({ children }: RootLayoutProps) {
 	return (
 		<html lang="en" suppressHydrationWarning>
 			<head />
 
-			<body
-				className={cn(
-					'min-h-screen bg-background font-sans antialiased',
-					fontSans.variable
-				)}
-			>
+			<body className={'min-h-screen bg-background antialiased' + ubuntuMono}>
 				<ThemeProvider
 					attribute="class"
 					defaultTheme="dark"

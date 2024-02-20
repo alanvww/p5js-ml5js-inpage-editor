@@ -106,8 +106,10 @@ export default function Home() {
 
 	return (
 		<main className="min-h-screen bg-[#292C33]">
-			<div className="flex flex-row justify-start items-center gap-x-4 h-[4vh] my-[0.5vh]">
-				<h1 className="inline text-2xl font-bold mx-4">Code Editor</h1>
+			<div className="flex flex-row justify-start items-center gap-x-4 h-[4vh] ">
+				<h1 className="inline text-2xl font-mono font-bold mx-4">
+					Code Editor
+				</h1>
 				{isLoading ? (
 					<button
 						onClick={refreshIframe}
