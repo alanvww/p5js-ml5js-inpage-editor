@@ -15,7 +15,12 @@ export type RootLayoutProps = {
 export default function RootLayout({ children }: RootLayoutProps) {
 	return (
 		<html lang="en" suppressHydrationWarning>
-			<head />
+			<head>
+				<meta charSet="utf-8" />
+				<meta name="viewport" content="width=device-width, initial-scale=1" />
+				<meta name="description" content="p5js-ml5js-inpage-editor" />
+				<title>p5js ml5js inpage editor</title>
+			</head>
 
 			<body className={'min-h-screen bg-background antialiased' + ubuntuMono}>
 				<ThemeProvider
