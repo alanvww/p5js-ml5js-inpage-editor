@@ -9,6 +9,9 @@ import {
 import { Button } from '@/components/ui/button';
 
 const App: React.FC = () => {
+	// State management using React hooks.
+	// `code` holds the JavaScript code as a string, `setCode` is the function to update this state.
+	// `iframeSrc` is for managing the iframe source, with `setIframeSrc` to update it.
 	const [code, setCode] = useState(`
 	// Copyright (c) 2023 ml5
 //
@@ -60,7 +63,7 @@ function gotFaces(results) {
   `);
 	const [iframeSrc, setIframeSrc] = useState('');
 
-	// HTML content Top and Bottom
+	// HTML template strings defining the static parts of the HTML to be injected into the iframe.
 	const htmlTop = `<!doctype html>
 	<html>
   <head>
@@ -81,6 +84,7 @@ function gotFaces(results) {
 	</body>
 	</html>`;
 
+	// Function to update the iframe's content based on the provided mode ('p5' or 'clear').
 	const updateIframeContent = (mode: string) => {
 		if (mode === 'p5') {
 			const blob = new Blob([htmlTop + code + htmlBottom], {
@@ -112,48 +116,57 @@ function gotFaces(results) {
 	);
 
 	return (
-		<ResizablePanelGroup direction="horizontal">
-			<ResizablePanel>
-				<ReactCodeMirror
-					value={code}
-					height="100vh"
-					extensions={[javascript()]}
-					onChange={(value) => setCode(value)}
-				/>
-			</ResizablePanel>
-			<ResizableHandle />
-			<ResizablePanel>
-				<div className="flex justify-center">
-					<Button
-						className={
-							'h-[2vh] align-baseline flex items-center justify-center "inline-blocktransition duration-150 ease-in-out focus:outline-none focus:ring-0'
-						}
-						variant="outline"
-						onClick={() => updateIframeContent('p5')}
-					>
-						{' '}
-						<StartIcon />
-						Start
-					</Button>
-					<Button
-						className={
-							'h-[2vh] align-baseline flex items-center justify-center "inline-blocktransition duration-150 ease-in-out focus:outline-none focus:ring-0'
-						}
-						variant="outline"
-						onClick={() => updateIframeContent('clear')}
-					>
-						{' '}
-						Clear
-					</Button>
-				</div>
+		<main className="min-w-full h-full">
+			<ResizablePanelGroup
+				direction="vertical"
+				className="min-h-[100vh] w-full h-full overflow-scroll"
+			>
+				<ResizablePanel>
+					{' '}
+					<div className="min-w-full h-full">
+						<div className="flex justify-center">
+							<Button
+								className={
+									'"inline-blocktransition flex h-[2vh] items-center justify-center align-baseline duration-150 ease-in-out focus:outline-none focus:ring-0'
+								}
+								variant="outline"
+								onClick={() => updateIframeContent('p5')}
+							>
+								{' '}
+								<StartIcon />
+								Start
+							</Button>
+							<Button
+								className={
+									'"inline-blocktransition flex h-[2vh] items-center justify-center align-baseline duration-150 ease-in-out focus:outline-none focus:ring-0'
+								}
+								variant="outline"
+								onClick={() => updateIframeContent('clear')}
+							>
+								{' '}
+								Stop
+							</Button>
+						</div>
 
-				<iframe
-					src={iframeSrc}
-					style={{ width: '100%', height: '100vh', border: 'none' }}
-					title="Preview"
-				></iframe>
-			</ResizablePanel>
-		</ResizablePanelGroup>
+						<iframe
+							src={iframeSrc}
+							style={{ width: '100%', height: '100%', border: 'none' }}
+							title="Preview"
+						></iframe>
+					</div>
+				</ResizablePanel>
+				<ResizableHandle />
+				<ResizablePanel className="max-h-[50vh] overflow-y-scroll">
+					<ReactCodeMirror
+						value={code}
+						extensions={[javascript()]}
+						onChange={(value) => setCode(value)}
+						maxHeight="50vh"
+						className="overflow-y-scroll"
+					/>
+				</ResizablePanel>
+			</ResizablePanelGroup>
+		</main>
 	);
 };
 
